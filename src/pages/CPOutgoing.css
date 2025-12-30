@@ -1,0 +1,136 @@
+.page-container {
+  min-height: 100vh;
+  background: #f1f5f9;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 50px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.page-title i {
+  font-size: 2.6rem;
+  color: #3b82f6;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 50px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card.clickable {
+  cursor: pointer;
+}
+
+/* Premium Hover Effect */
+.card.hover-card:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.card.hover-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.18));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 18px;
+}
+
+.card.hover-card:hover::before {
+  opacity: 1;
+}
+
+.card-icon {
+  font-size: 4rem;
+  margin-bottom: 25px;
+  color: #3b82f6;
+  transition: transform 0.4s ease;
+}
+
+.card.hover-card:hover .card-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.card-icon.muted {
+  color: #94a3b8;
+}
+
+.card h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.card.disabled h3 {
+  color: #64748b;
+}
+
+/* Arrow Reveal + Slide */
+.card-arrow {
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  font-size: 2rem;
+  color: #94a3b8;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card.hover-card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(12px);
+  color: #3b82f6;
+}
+
+.arrow-icon {
+  display: inline-block;
+}
+
+/* Disabled Card Subtle Feedback */
+.card.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.card.disabled:hover {
+  transform: translateY(-5px);
+  opacity: 0.9;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-title i {
+  font-size: 2.8rem;
+  color: #3b82f6;
+}

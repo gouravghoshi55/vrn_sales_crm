@@ -1,0 +1,48 @@
+/* Strong visible gradient for right panel */
+.bg-primary-gradient {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 50%, #1e3a8a 100%);
+}
+
+/* Subtle wave shape on left edge of right panel */
+.bg-wave {
+  background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.1) 50%);
+  clip-path: polygon(0 0, 15% 0, 25% 100%, 0 100%);
+}
+
+/* Ensure text is visible */
+.z-10 {
+  position: relative;
+  z-index: 10;
+}
+
+/* Strong blue gradient background */
+.bg-primary-gradient {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 50%, #1e3a8a 100%);
+}
+
+/* Subtle wave shape on the left edge */
+.bg-wave {
+  background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.12) 50%);
+  clip-path: polygon(0 0, 20% 0, 30% 100%, 0 100%);
+}
+
+/* Logo styling - responsive and crisp */
+.login-logo {
+  height: 80px;           /* Adjust height as needed */
+  max-width: 300px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+/* Ensure content is above overlay */
+.z-10 {
+  position: relative;
+  z-index: 10;
+}
+
+/* Responsive logo on smaller large screens */
+@media (max-width: 1200px) {
+  .login-logo {
+    height: 60px;
+  }
+}

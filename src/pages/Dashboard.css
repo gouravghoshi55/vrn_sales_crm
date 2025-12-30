@@ -1,0 +1,76 @@
+/* Ultra-smooth premium hover effect - Active Card */
+.hover-card {
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Subtle inner glow for active card */
+.hover-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.1));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.hover-card:hover::before {
+  opacity: 1;
+}
+
+/* Arrow animation - only for active card */
+.arrow-icon {
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block;
+}
+
+.hover-card:hover .arrow-icon {
+  transform: translateX(14px);
+}
+
+.hover-card:hover .card-footer span {
+  color: #2563eb !important;
+}
+
+/* NEW: Subtle hover for "Coming Soon" (disabled) cards */
+.coming-soon-hover {
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: not-allowed; /* Shows it's disabled */
+  opacity: 0.75;
+}
+
+.coming-soon-hover:hover {
+  transform: translateY(-6px); /* Gentle lift */
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15) !important;
+  opacity: 1; /* Brightens up */
+}
+
+/* Optional: Slight scale on coming soon hover (very subtle) */
+.coming-soon-hover:hover {
+  transform: translateY(-6px) scale(1.01);
+}
+
+/* Base card polish */
+.card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Nicer header gradient */
+.bg-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+}
+
+.text-decoration-none {
+  color: inherit;
+}
