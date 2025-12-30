@@ -13,8 +13,8 @@ function CallToBroker() {
   // Filter states
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [status, setStatus] = useState(""); // Status filter (J column)
-  const [leadQualified, setLeadQualified] = useState(""); // New Is Lead Qualified filter (K column)
+  const [status, setStatus] = useState("");
+  const [leadQualified, setLeadQualified] = useState("");
 
   const loadData = async (filters = {}) => {
     setLoading(true);
@@ -25,13 +25,11 @@ function CallToBroker() {
     setLoading(false);
   };
 
-  // Initial load
   useEffect(() => {
     loadData();
   }, []);
 
   const handleApplyFilter = () => {
-    // Validate dates if provided
     if ((fromDate || toDate) && (!fromDate || !toDate)) {
       alert("Please select both From and To dates");
       return;
@@ -57,6 +55,17 @@ function CallToBroker() {
     loadData();
   };
 
+  // Format date for display (safe handling if null/undefined)
+  const formatDate = (dateVal) => {
+    if (!dateVal) return "-";
+    const date = new Date(dateVal);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   return (
     <Layout
       breadcrumbs={[
@@ -74,10 +83,9 @@ function CallToBroker() {
             </h3>
           </div>
 
-          {/* Filter Bar - Date + Status + Lead Qualified */}
+          {/* Filter Bar */}
           <div className="card-body pt-4 px-4 border-bottom">
             <Form className="row g-3 align-items-end">
-              {/* From Date */}
               <div className="col-md-2">
                 <Form.Label className="fw-medium">From Date</Form.Label>
                 <Form.Control
@@ -87,7 +95,6 @@ function CallToBroker() {
                 />
               </div>
 
-              {/* To Date */}
               <div className="col-md-2">
                 <Form.Label className="fw-medium">To Date</Form.Label>
                 <Form.Control
@@ -97,7 +104,6 @@ function CallToBroker() {
                 />
               </div>
 
-              {/* Status Filter (old) */}
               <div className="col-md-3">
                 <Form.Label className="fw-medium">Status</Form.Label>
                 <Form.Select
@@ -111,7 +117,6 @@ function CallToBroker() {
                 </Form.Select>
               </div>
 
-              {/* Is Lead Qualified Filter (new) */}
               <div className="col-md-3">
                 <Form.Label className="fw-medium">Is Lead Qualified</Form.Label>
                 <Form.Select
@@ -124,7 +129,6 @@ function CallToBroker() {
                 </Form.Select>
               </div>
 
-              {/* Buttons */}
               <div className="col-md-2 d-flex gap-2">
                 <Button
                   variant="primary"
@@ -163,6 +167,7 @@ function CallToBroker() {
               <Table hover responsive bordered className="mb-0 align-middle">
                 <thead className="table-light">
                   <tr>
+                    <th>Planned Date</th> {/* NEW COLUMN - FIRST */}
                     <th>Firm Name</th>
                     <th>Contact</th>
                     <th>Locality</th>
@@ -173,10 +178,11 @@ function CallToBroker() {
                 <tbody>
                   {rows.map((r, i) => (
                     <tr key={i}>
+                      <td>{formatDate(r.plannedDate)}</td> {/* NEW - Planned Date */}
                       <td className="fw-medium">{r.colB}</td>
                       <td>{r.colC || "-"}</td>
                       <td>{r.colD}</td>
-                      <td>{r.colK || "-"}</td> {/* New column */}
+                      <td>{r.colK || "-"}</td>
                       <td className="text-center">
                         <Button
                           size="sm"

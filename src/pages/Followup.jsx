@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchFollowupData } from "../services/fmsApi";
-import FollowupModal from "./FollowupModal"; // Update this modal file next
+import FollowupModal from "./FollowupModal";
 import { Button, Table, Form } from "react-bootstrap";
 import Layout from "./Layout";
 import SkeletonTable from "../components/SkeletonTable";
@@ -13,7 +13,7 @@ function Followup() {
   // Filter states
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [status, setStatus] = useState(""); // Status filter on column I
+  const [status, setStatus] = useState("");
 
   const loadData = async (filters = {}) => {
     setLoading(true);
@@ -24,13 +24,12 @@ function Followup() {
     setLoading(false);
   };
 
-  // Initial load (no filter)
+  // Initial load
   useEffect(() => {
     loadData();
   }, []);
 
   const handleApplyFilter = () => {
-    // Validate dates if provided
     if ((fromDate || toDate) && (!fromDate || !toDate)) {
       alert("Please select both From and To dates");
       return;
@@ -51,7 +50,19 @@ function Followup() {
     setFromDate("");
     setToDate("");
     setStatus("");
-    loadData(); // Reload all data
+    loadData();
+  };
+
+  // Format date for display (safe handling)
+  const formatDate = (dateVal) => {
+    if (!dateVal || dateVal === "-") return "-";
+    const date = new Date(dateVal);
+    if (isNaN(date.getTime())) return dateVal.toString(); // fallback for text dates
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
   };
 
   return (
@@ -71,10 +82,9 @@ function Followup() {
             </h3>
           </div>
 
-          {/* Filter Bar - Date + Status */}
+          {/* Filter Bar */}
           <div className="card-body pt-4 px-4 border-bottom">
             <Form className="row g-3 align-items-end">
-              {/* From Date */}
               <div className="col-md-2">
                 <Form.Label className="fw-medium">From Date</Form.Label>
                 <Form.Control
@@ -84,7 +94,6 @@ function Followup() {
                 />
               </div>
 
-              {/* To Date */}
               <div className="col-md-2">
                 <Form.Label className="fw-medium">To Date</Form.Label>
                 <Form.Control
@@ -94,7 +103,6 @@ function Followup() {
                 />
               </div>
 
-              {/* Status Filter */}
               <div className="col-md-3">
                 <Form.Label className="fw-medium">Status</Form.Label>
                 <Form.Select
@@ -108,7 +116,6 @@ function Followup() {
                 </Form.Select>
               </div>
 
-              {/* Buttons */}
               <div className="col-md-5 d-flex gap-2">
                 <Button
                   variant="primary"
@@ -147,6 +154,7 @@ function Followup() {
               <Table hover responsive bordered className="mb-0 align-middle">
                 <thead className="table-light">
                   <tr>
+                    <th>Planned Date</th> {/* NEW COLUMN - FIRST */}
                     <th>Firm Name</th>
                     <th>Contact</th>
                     <th>Locality</th>
@@ -156,6 +164,7 @@ function Followup() {
                 <tbody>
                   {rows.map((r, i) => (
                     <tr key={i}>
+                      <td>{formatDate(r.plannedDate)}</td> {/* NEW - Planned Date */}
                       <td className="fw-medium">{r.colB}</td>
                       <td>{r.colC || "-"}</td>
                       <td>{r.colD}</td>

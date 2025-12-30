@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchMeetingsData } from "../services/fmsApi"; // New function name
-import MeetingsModal from "./MeetingsModal"; // New modal name
+import { fetchMeetingsData } from "../services/fmsApi";
+import MeetingsModal from "./MeetingsModal";
 import { Button, Table, Form } from "react-bootstrap";
 import Layout from "./Layout";
 import SkeletonTable from "../components/SkeletonTable";
@@ -13,7 +13,7 @@ function Meetings() {
   // Filter states
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [status, setStatus] = useState(""); // Status filter on column T
+  const [status, setStatus] = useState("");
 
   const loadData = async (filters = {}) => {
     setLoading(true);
@@ -24,13 +24,12 @@ function Meetings() {
     setLoading(false);
   };
 
-  // Initial load (no filter)
+  // Initial load
   useEffect(() => {
     loadData();
   }, []);
 
   const handleApplyFilter = () => {
-    // Validate dates if provided
     if ((fromDate || toDate) && (!fromDate || !toDate)) {
       alert("Please select both From and To dates");
       return;
@@ -54,6 +53,18 @@ function Meetings() {
     loadData();
   };
 
+  // Format date for display (safe handling)
+  const formatDate = (dateVal) => {
+    if (!dateVal || dateVal === "-") return "-";
+    const date = new Date(dateVal);
+    if (isNaN(date.getTime())) return dateVal.toString(); // fallback for text dates
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   return (
     <Layout
       breadcrumbs={[
@@ -71,10 +82,9 @@ function Meetings() {
             </h3>
           </div>
 
-          {/* Filter Bar - Date + Status */}
+          {/* Filter Bar */}
           <div className="card-body pt-4 px-4 border-bottom">
             <Form className="row g-3 align-items-end">
-              {/* From Date */}
               <div className="col-md-2">
                 <Form.Label className="fw-medium">From Date</Form.Label>
                 <Form.Control
@@ -84,7 +94,6 @@ function Meetings() {
                 />
               </div>
 
-              {/* To Date */}
               <div className="col-md-2">
                 <Form.Label className="fw-medium">To Date</Form.Label>
                 <Form.Control
@@ -94,7 +103,6 @@ function Meetings() {
                 />
               </div>
 
-              {/* Status Filter */}
               <div className="col-md-3">
                 <Form.Label className="fw-medium">Status</Form.Label>
                 <Form.Select
@@ -107,7 +115,6 @@ function Meetings() {
                 </Form.Select>
               </div>
 
-              {/* Buttons */}
               <div className="col-md-5 d-flex gap-2">
                 <Button
                   variant="primary"
@@ -146,6 +153,7 @@ function Meetings() {
               <Table hover responsive bordered className="mb-0 align-middle">
                 <thead className="table-light">
                   <tr>
+                    <th>Planned Date</th> {/* NEW COLUMN - FIRST */}
                     <th>Firm Name</th>
                     <th>Contact</th>
                     <th>Locality</th>
@@ -155,6 +163,7 @@ function Meetings() {
                 <tbody>
                   {rows.map((r, i) => (
                     <tr key={i}>
+                      <td>{formatDate(r.plannedDate)}</td> {/* NEW - Planned Date */}
                       <td className="fw-medium">{r.colB}</td>
                       <td>{r.colC || "-"}</td>
                       <td>{r.colD}</td>
