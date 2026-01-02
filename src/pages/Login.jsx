@@ -2,7 +2,7 @@ import { useState } from "react";
 import { login } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
-import "./login.css";
+import "../assets/styles/login.css";
 
 function Login() {
   const [email, setEmail] = useState("");

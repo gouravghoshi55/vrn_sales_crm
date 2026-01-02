@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Layout from "./Layout"; 
-import "./Dashboard.css";
+import Layout from "../components/Layout"; 
+import "../assets/styles/Dashboard.css";
 
 function Dashboard() {
   const userData = localStorage.getItem("user");

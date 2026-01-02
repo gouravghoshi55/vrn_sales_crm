@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Layout from "./Layout";  
-import "./ChannelPartner.css";
+import Layout from "../components/Layout";  
+import "../assets/styles/ChannelPartner.css";
 
 function ChannelPartner() {
   const navigate = useNavigate();

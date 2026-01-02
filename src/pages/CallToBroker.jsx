@@ -1,33 +1,42 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query"; // NEW: TanStack Query
 import { fetchCallToBrokerData } from "../services/fmsApi";
 import ActionModal from "./ActionModal";
 import { Button, Table, Form } from "react-bootstrap";
-import Layout from "./Layout";
+import Layout from "../components/Layout";
 import SkeletonTable from "../components/SkeletonTable";
 
 function CallToBroker() {
-  const [rows, setRows] = useState([]);
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [loading, setLoading] = useState(true);
-
   // Filter states
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [status, setStatus] = useState("");
   const [leadQualified, setLeadQualified] = useState("");
 
-  const loadData = async (filters = {}) => {
-    setLoading(true);
-    const res = await fetchCallToBrokerData(filters);
-    if (res.success) {
-      setRows(res.data);
-    }
-    setLoading(false);
-  };
+  // Selected row for modal
+  const [selectedRow, setSelectedRow] = useState(null);
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  // TanStack Query: fetches and caches data
+  const {
+    data: rows = [],          // Default empty array if no data
+    isLoading,
+    refetch,                  // To refresh after modal success
+  } = useQuery({
+    // Cache key: changes when any filter changes → auto refetch
+    queryKey: ["callToBroker", fromDate, toDate, status, leadQualified],
+    queryFn: () => fetchCallToBrokerData({
+      fromDate: fromDate || undefined,
+      toDate: toDate || undefined,
+      status: status || undefined,
+      leadQualified: leadQualified || undefined,
+    }),
+    // Extract data from response
+    select: (res) => res?.data || [],
+    // Cache for 5 minutes (adjust as needed)
+    staleTime: 1000 * 60 * 5,
+    // Keep cached data for 30 minutes
+    gcTime: 1000 * 60 * 30,
+  });
 
   const handleApplyFilter = () => {
     if ((fromDate || toDate) && (!fromDate || !toDate)) {
@@ -39,12 +48,7 @@ function CallToBroker() {
       return;
     }
 
-    loadData({
-      fromDate: fromDate || undefined,
-      toDate: toDate || undefined,
-      status: status || undefined,
-      leadQualified: leadQualified || undefined,
-    });
+    // No need to call loadData — changing state updates queryKey → auto refetch
   };
 
   const handleClearFilter = () => {
@@ -52,10 +56,10 @@ function CallToBroker() {
     setToDate("");
     setStatus("");
     setLeadQualified("");
-    loadData();
+    // State change triggers refetch automatically
   };
 
-  // Format date for display (safe handling if null/undefined)
+  // Format date for display
   const formatDate = (dateVal) => {
     if (!dateVal) return "-";
     const date = new Date(dateVal);
@@ -133,7 +137,7 @@ function CallToBroker() {
                 <Button
                   variant="primary"
                   onClick={handleApplyFilter}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <i className="bi bi-funnel me-2"></i>
                   Apply
@@ -141,7 +145,7 @@ function CallToBroker() {
                 <Button
                   variant="outline-secondary"
                   onClick={handleClearFilter}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <i className="bi bi-x-circle me-2"></i>
                   Clear
@@ -152,8 +156,8 @@ function CallToBroker() {
 
           {/* Table Body */}
           <div className="card-body p-0 px-4 pb-4">
-            {loading ? (
-              <SkeletonTable rowsCount={6} />
+            {isLoading ? (
+              <SkeletonTable rowsCount={8} />
             ) : rows.length === 0 ? (
               <div className="text-center py-5 text-muted">
                 <i className="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
@@ -167,7 +171,7 @@ function CallToBroker() {
               <Table hover responsive bordered className="mb-0 align-middle">
                 <thead className="table-light">
                   <tr>
-                    <th>Planned Date</th> {/* NEW COLUMN - FIRST */}
+                    <th>Planned Date</th>
                     <th>Firm Name</th>
                     <th>Contact</th>
                     <th>Locality</th>
@@ -178,7 +182,7 @@ function CallToBroker() {
                 <tbody>
                   {rows.map((r, i) => (
                     <tr key={i}>
-                      <td>{formatDate(r.plannedDate)}</td> {/* NEW - Planned Date */}
+                      <td>{formatDate(r.plannedDate)}</td>
                       <td className="fw-medium">{r.colB}</td>
                       <td>{r.colC || "-"}</td>
                       <td>{r.colD}</td>
@@ -212,7 +216,7 @@ function CallToBroker() {
           <ActionModal
             row={selectedRow}
             onClose={() => setSelectedRow(null)}
-            onSuccess={loadData}
+            onSuccess={() => refetch()} // Refresh data after modal success
           />
         )}
       </div>

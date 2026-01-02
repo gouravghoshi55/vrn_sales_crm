@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Layout from "./Layout";  
-import "./Process.css";
+import Layout from "../components/Layout";  
+import "../assets/styles/Process.css";
 
 function Process() {
   const navigate = useNavigate();

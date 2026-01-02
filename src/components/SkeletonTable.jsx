@@ -1,5 +1,5 @@
 // src/components/SkeletonTable.jsx
-function SkeletonTable({ rowsCount = 6 }) {
+function SkeletonTable({ rowsCount = 8 }) {
   return (
     <div className="p-4">
       <div className="table-responsive">

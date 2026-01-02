@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Layout from "./Layout";  
-import "./CPOutgoing.css";
+import Layout from "../components/Layout";  
+import "../assets/styles/CPOutgoing.css";
 
 function CPOutgoing() {
   const navigate = useNavigate();

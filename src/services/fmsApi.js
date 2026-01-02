@@ -1,11 +1,11 @@
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzNLcMvJXt18hDBb6Em3iEZhrXD5zE14V_jSfbpsTP7tRsfdNSN7Yu27n7VUgshemX5/exec";
+  "https://script.google.com/macros/s/AKfycbzrg91pZ90ZFT_k_cQYARuUfALUU-jVB5Lnl5rjmxydhgOPhX9MzlTMKe0Rr0oQWkMn/exec";
 const buildParams = (baseParams = {}, filterParams = {}) => {
   const params = new URLSearchParams(baseParams);
 
   if (filterParams?.fromDate) {
     params.append("fromDate", filterParams.fromDate);
-  }
+  }       
   if (filterParams?.toDate) {
     params.append("toDate", filterParams.toDate);
   }
@@ -94,6 +94,37 @@ export const submitMeetingsAction = async (payload) => {
     remark: payload.remark || "",
   });
 
+  const res = await fetch(`${API_URL}?${params.toString()}`);
+  return res.json();
+};
+
+// Get pending follow-ups that need to be created from FMS
+export const getPendingFollowups = async () => {
+  const params = new URLSearchParams({ action: "getPendingFollowups" });
+  const res = await fetch(`${API_URL}?${params.toString()}`);
+  return res.json();
+};
+
+// Get pending next-level follow-ups from Followup sheet
+export const getPendingNextFollowups = async () => {
+  const params = new URLSearchParams({ action: "getPendingNextFollowups" });
+  const res = await fetch(`${API_URL}?${params.toString()}`);
+  return res.json();
+};
+
+// Create follow-ups in batch
+export const createFollowups = async (followupsArray) => {
+  const params = new URLSearchParams({
+    action: "createFollowups",
+    followups: JSON.stringify(followupsArray),
+  });
+  const res = await fetch(`${API_URL}?${params.toString()}`);
+  return res.json();
+};
+
+// Get holidays list
+export const getHolidays = async () => {
+  const params = new URLSearchParams({ action: "getHolidays" });
   const res = await fetch(`${API_URL}?${params.toString()}`);
   return res.json();
 };
