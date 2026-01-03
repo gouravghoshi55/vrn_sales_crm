@@ -28,6 +28,7 @@ function ActionModal({ row, onClose, onSuccess }) {
       rera,
       remark,
       days: status === "Agreed to next meeting" ? days : "",
+      actualDate: new Date().toISOString(),
     };
 
     const res = await submitCallToBrokerAction(payload);
@@ -67,7 +68,9 @@ function ActionModal({ row, onClose, onSuccess }) {
             >
               <option value="">Select status...</option>
               <option value="CRR">CRR</option>
-              <option value="Agreed to next meeting">Agreed to next meeting</option>
+              <option value="Agreed to next meeting">
+                Agreed to next meeting
+              </option>
               <option value="Call Again">Call Again</option>
             </Form.Select>
           </Form.Group>
@@ -140,7 +143,9 @@ function ActionModal({ row, onClose, onSuccess }) {
           {/* Conditional Days for Official Meeting */}
           <div
             className={`transition-all ${
-              status === "Agreed to next meeting" ? "opacity-100 max-h-200" : "opacity-0 max-h-0"
+              status === "Agreed to next meeting"
+                ? "opacity-100 max-h-200"
+                : "opacity-0 max-h-0"
             } overflow-hidden`}
             style={{ transition: "all 0.4s ease" }}
           >

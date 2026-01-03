@@ -1,11 +1,11 @@
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzp-kGAXZeOfdPYVLt41pGzioYp5QmRwKolL1ybYnoMCzPXvz7ptZ4RW_oIveftXgDx/exec";
+  "https://script.google.com/macros/s/AKfycbx0Gq-ZdNFYqIbDtVKUmaVNxQtAVtASQFQfx7Jq4R7iNgBmN_eMyHYW7Nu5V4jumkVI/exec";
 const buildParams = (baseParams = {}, filterParams = {}) => {
   const params = new URLSearchParams(baseParams);
 
   if (filterParams?.fromDate) {
     params.append("fromDate", filterParams.fromDate);
-  }       
+  }
   if (filterParams?.toDate) {
     params.append("toDate", filterParams.toDate);
   }
@@ -43,16 +43,18 @@ export const fetchFollowupData = async ({ fromDate, toDate, status } = {}) => {
 };
 
 // Update for Step 1: Call to Broker
+// Update for Step 1: Call to Broker
 export const submitCallToBrokerAction = async (payload) => {
   const params = new URLSearchParams({
     action: "updateStep1",
     rowNumber: payload.rowNumber,
     status: payload.status || "",
-    leadQualified: payload.leadQualified || "", // New field
+    leadQualified: payload.leadQualified || "",
     contactPerson: payload.contactPerson || "",
     rera: payload.rera || "",
     remark: payload.remark || "",
     days: payload.days || "",
+    actualDate: payload.actualDate || new Date().toISOString(), // Add actual date
   });
 
   const res = await fetch(`${API_URL}?${params.toString()}`);

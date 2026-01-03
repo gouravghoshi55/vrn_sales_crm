@@ -27,7 +27,7 @@ function MeetingsModal({ row, onClose, onSuccess }) {
     setSaving(false);
 
     if (res.success) {
-      toast.success("Meeting action updated successfully");
+      toast.success("Status updated successfully");
       onClose();
       onSuccess();
     } else {
