@@ -15,7 +15,7 @@ function CPOutgoing() {
       <div className="page-container">
         <h1 className="page-title">
           <i className="bi bi-arrow-up-right-circle me-3"></i>
-          CP Outgoing FMS
+          CP outgoing FMS
         </h1>
 
         <div className="card-grid">

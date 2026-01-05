@@ -8,6 +8,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import CallToBroker from "./pages/CallToBroker"; 
 import Followup from "./pages/Followup"; 
 import Meetings from "./pages/Meetings"; 
+import NewProjectProcess from "./pages/NewProjectProcess";
 
 function App() {
   return (
@@ -68,6 +69,15 @@ function App() {
           </PrivateRoute>
         }
       />
+
+      <Route
+  path="/new-project-development"
+  element={
+    <PrivateRoute>
+      <NewProjectProcess />
+    </PrivateRoute>
+  }
+/>
 
       <Route
         path="/process/meetings"

@@ -30,36 +30,19 @@ function ChannelPartner() {
             </span>
           </div>
 
-          {/* Disabled Cards */}
-          {/* <div className="card disabled">
-            <div className="card-icon muted">
-              <i className="bi bi-clock-history"></i>
-            </div>
-            <h3>NEW Project Developement FMS</h3>
-          </div> */}
-
-          <div
-            className="card clickable hover-card"
-            onClick={() =>
-              window.open(
-                "https://script.google.com/macros/s/AKfycbzNYtLFBP22Yv_779y61_LmvqE6znjnay1TWu0pV2iZYFRwjHWKEbz0V7Mq8hBrYyr38Q/exec",
-                "_blank",
-                "noopener,noreferrer"
-              )
-            }
-          >
-            <div className="card-icon">
-              {/* <i className="bi bi-building-fill"></i>*/}
-              {/* Alternatives you can swap in: */}
-              <i className="bi bi-houses-fill"></i>
-              {/* <i className="bi bi-rocket-takeoff-fill"></i>
-      <i className="bi bi-plus-circle-fill"></i> */}
-            </div>
-            <h3>NEW Project Development FMS</h3>
-            <span className="card-arrow">
-              <i className="bi bi-arrow-right arrow-icon"></i>
-            </span>
-          </div>
+<div
+  className="card clickable hover-card"
+  onClick={() => navigate("/new-project-development")}
+  title="New Project Development FMS Process"
+>
+  <div className="card-icon">
+    <i className="bi bi-building-fill"></i>
+  </div>
+  <h3>NEW Project Development FMS</h3>
+  <span className="card-arrow">
+    <i className="bi bi-arrow-right arrow-icon"></i>
+  </span>
+</div>
 
           <div className="card disabled">
             <div className="card-icon muted">
