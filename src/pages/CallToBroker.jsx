@@ -18,18 +18,19 @@ function CallToBroker() {
 
   // TanStack Query: fetches and caches data
   const {
-    data: rows = [],          // Default empty array if no data
+    data: rows = [], // Default empty array if no data
     isLoading,
-    refetch,                  // To refresh after modal success
+    refetch, // To refresh after modal success
   } = useQuery({
     // Cache key: changes when any filter changes → auto refetch
     queryKey: ["callToBroker", fromDate, toDate, status, leadQualified],
-    queryFn: () => fetchCallToBrokerData({
-      fromDate: fromDate || undefined,
-      toDate: toDate || undefined,
-      status: status || undefined,
-      leadQualified: leadQualified || undefined,
-    }),
+    queryFn: () =>
+      fetchCallToBrokerData({
+        fromDate: fromDate || undefined,
+        toDate: toDate || undefined,
+        status: status || undefined,
+        leadQualified: leadQualified || undefined,
+      }),
     // Extract data from response
     select: (res) => res?.data || [],
     // Cache for 5 minutes (adjust as needed)
@@ -108,16 +109,20 @@ function CallToBroker() {
                 />
               </div>
 
-              <div className="col-md-3">
+              {/* <div className="col-md-3">
                 <Form.Label className="fw-medium">Status</Form.Label>
                 <Form.Select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value="">All Statuses</option>
-                  <option value="CRR">CRR</option>
-                  <option value="Agreed to next meeting">Agreed to next meeting</option>
                   <option value="Call Again">Call Again</option>
+                  <option value="Agreed to nextmeeting">
+                    Agreed to next meeting
+                  </option>
+                  <option value="Not interested">Not interested</option>
+                  <option value="CRR">CRR</option>
+                  <option value="Not Eligible">Not Eligible</option>s
                 </Form.Select>
               </div>
 
@@ -131,7 +136,7 @@ function CallToBroker() {
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </Form.Select>
-              </div>
+              </div> */}
 
               <div className="col-md-2 d-flex gap-2">
                 <Button

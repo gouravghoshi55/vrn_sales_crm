@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";  
+import Layout from "../components/Layout";
 import "../assets/styles/ChannelPartner.css";
 
 function ChannelPartner() {
@@ -7,9 +7,7 @@ function ChannelPartner() {
 
   return (
     <Layout
-      breadcrumbs={[
-        { name: "Channel Partner", path: "/channel-partner" }
-      ]}
+      breadcrumbs={[{ name: "Channel Partner", path: "/channel-partner" }]}
     >
       <div className="page-container">
         <h1 className="page-title">
@@ -33,11 +31,34 @@ function ChannelPartner() {
           </div>
 
           {/* Disabled Cards */}
-          <div className="card disabled">
+          {/* <div className="card disabled">
             <div className="card-icon muted">
               <i className="bi bi-clock-history"></i>
             </div>
-            <h3>Updating Soon</h3>
+            <h3>NEW Project Developement FMS</h3>
+          </div> */}
+
+          <div
+            className="card clickable hover-card"
+            onClick={() =>
+              window.open(
+                "https://script.google.com/macros/s/AKfycbzNYtLFBP22Yv_779y61_LmvqE6znjnay1TWu0pV2iZYFRwjHWKEbz0V7Mq8hBrYyr38Q/exec",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
+          >
+            <div className="card-icon">
+              {/* <i className="bi bi-building-fill"></i>*/}
+              {/* Alternatives you can swap in: */}
+              <i className="bi bi-houses-fill"></i>
+              {/* <i className="bi bi-rocket-takeoff-fill"></i>
+      <i className="bi bi-plus-circle-fill"></i> */}
+            </div>
+            <h3>NEW Project Development FMS</h3>
+            <span className="card-arrow">
+              <i className="bi bi-arrow-right arrow-icon"></i>
+            </span>
           </div>
 
           <div className="card disabled">

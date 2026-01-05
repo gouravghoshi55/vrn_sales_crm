@@ -17,17 +17,18 @@ function Meetings() {
 
   // TanStack Query: fetches and caches data
   const {
-    data: rows = [],       // Default to empty array if no data
+    data: rows = [], // Default to empty array if no data
     isLoading,
-    refetch,               // To refresh after modal success
+    refetch, // To refresh after modal success
   } = useQuery({
     // Cache key: changes when any filter changes → auto refetch
     queryKey: ["meetings", fromDate, toDate, status],
-    queryFn: () => fetchMeetingsData({
-      fromDate: fromDate || undefined,
-      toDate: toDate || undefined,
-      status: status || undefined,
-    }),
+    queryFn: () =>
+      fetchMeetingsData({
+        fromDate: fromDate || undefined,
+        toDate: toDate || undefined,
+        status: status || undefined,
+      }),
     // Extract data from response
     select: (res) => res?.data || [],
     // Cache settings: keep fresh for 5 min, keep in memory for 30 min
@@ -71,7 +72,7 @@ function Meetings() {
     <Layout
       breadcrumbs={[
         { name: "Process Flow", path: "/channel-partner/cp-outgoing/process" },
-        { name: "Meetings", path: "/process/meetings" }
+        { name: "Meetings", path: "/process/meetings" },
       ]}
     >
       <div className="container my-5">
@@ -105,7 +106,7 @@ function Meetings() {
                 />
               </div>
 
-              <div className="col-md-3">
+              {/* <div className="col-md-3">
                 <Form.Label className="fw-medium">Status</Form.Label>
                 <Form.Select
                   value={status}
@@ -115,7 +116,7 @@ function Meetings() {
                   <option value="Done">Done</option>
                   <option value="Not done">Not done</option>
                 </Form.Select>
-              </div>
+              </div> */}
 
               <div className="col-md-5 d-flex gap-2">
                 <Button

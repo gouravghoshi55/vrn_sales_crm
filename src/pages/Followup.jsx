@@ -105,7 +105,7 @@ function Followup() {
                 />
               </div>
 
-              <div className="col-md-3">
+              {/* <div className="col-md-3">
                 <Form.Label className="fw-medium">Status</Form.Label>
                 <Form.Select
                   value={status}
@@ -116,7 +116,7 @@ function Followup() {
                   <option value="Agreed to next meeting">Agreed to next meeting</option>
                   <option value="Not interested">Not interested</option>
                 </Form.Select>
-              </div>
+              </div> */}
 
               <div className="col-md-5 d-flex gap-2">
                 <Button

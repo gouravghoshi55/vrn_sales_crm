@@ -1,5 +1,5 @@
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbx0Gq-ZdNFYqIbDtVKUmaVNxQtAVtASQFQfx7Jq4R7iNgBmN_eMyHYW7Nu5V4jumkVI/exec";
+  "https://script.google.com/macros/s/AKfycbwGsFsvneIJZAqYKmnMwDbHSuKrqf-vVMVrRupil9d-fXV8uVRSpvJSanh2WsfRwzoN/exec";
 const buildParams = (baseParams = {}, filterParams = {}) => {
   const params = new URLSearchParams(baseParams);
 
