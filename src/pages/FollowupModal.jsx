@@ -43,12 +43,18 @@ function FollowupModal({ row, onClose, onSuccess }) {
 
   return (
     <Modal show onHide={onClose} centered size="lg" backdrop="static">
-      <Modal.Header closeButton className="border-0 pb-0">
-        <Modal.Title className="fw-bold d-flex align-items-center gap-2">
-          <i className="bi bi-chat-dots text-primary fs-4"></i>
-          Follow-up Update
-        </Modal.Title>
-      </Modal.Header>
+      <Modal.Header closeButton className="border-0 pb-1">
+  <div>
+    <Modal.Title className="fw-bold d-flex align-items-center gap-2">
+      <i className="bi bi-chat-dots text-primary fs-4"></i>  {/* changed icon to match Followup */}
+      Follow-up Action
+    </Modal.Title>
+    <div className="text-muted small mt-1">
+      Firm: <strong>{row.colB || "—"}</strong>
+      {row.colC && ` • Contact: ${row.colC}`}
+    </div>
+  </div>
+</Modal.Header>
 
       <Modal.Body className="pt-4">
         <Form>

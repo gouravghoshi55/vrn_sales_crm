@@ -46,12 +46,18 @@ function ActionModal({ row, onClose, onSuccess }) {
 
   return (
     <Modal show onHide={onClose} centered size="lg" backdrop="static">
-      <Modal.Header closeButton className="border-0 pb-0">
-        <Modal.Title className="fw-bold d-flex align-items-center gap-2">
-          <i className="bi bi-pencil-square text-primary fs-4"></i>
-          Update Call to Broker
-        </Modal.Title>
-      </Modal.Header>
+      <Modal.Header closeButton className="border-0 pb-1">
+  <div>
+    <Modal.Title className="fw-bold d-flex align-items-center gap-2">
+      <i className="bi bi-pencil-square text-primary fs-4"></i>
+      Update Call to Broker
+    </Modal.Title>
+    <div className="text-muted small mt-1">
+      Firm: <strong>{row.colB || "—"}</strong>  
+      {row.colC && ` • Contact: ${row.colC}`}
+    </div>
+  </div>
+</Modal.Header>
 
       <Modal.Body className="pt-4">
         <Form>
@@ -77,24 +83,22 @@ function ActionModal({ row, onClose, onSuccess }) {
             </Form.Select>
           </Form.Group>
 
-          <Form.Group className="mb-3">
+        <Form.Group className="mb-3">
             <Form.Label className="fw-medium">
               <i className="bi bi-check-circle-fill me-2 text-primary"></i>
-              Is Lead Qualified
-              {/* Remove <span className="text-danger">*</span> if you also want to visually remove the "required" look */}
+              Is Lead Qualified <span className="text-danger">*</span>
             </Form.Label>
             <Form.Select
               value={leadQualified}
               onChange={(e) => setLeadQualified(e.target.value)}
               className="form-select-lg"
-              // Remove required if you added it
-              // required    ← just delete or comment this line
             >
               <option value="">Select...</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </Form.Select>
           </Form.Group>
+
 
           {/* Contact Person Name */}
           <Form.Group className="mb-3">
