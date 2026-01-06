@@ -68,6 +68,8 @@ function ActionModal({ row, onClose, onSuccess }) {
             >
               <option value="">Select status...</option>
               <option value="CRR">CRR</option>
+              <option value="Not interested">Not interested</option>
+              <option value="Not Eligible">Not Eligible</option>
               <option value="Agreed to next meeting">
                 Agreed to next meeting
               </option>

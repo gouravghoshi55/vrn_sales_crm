@@ -20,6 +20,7 @@ function ChannelPartner() {
           <div
             className="card clickable hover-card"
             onClick={() => navigate("/channel-partner/cp-outgoing")}
+            title="CP Outgoing FMS Process"
           >
             <div className="card-icon">
               <i className="bi bi-arrow-up-right-circle-fill"></i>
@@ -30,20 +31,22 @@ function ChannelPartner() {
             </span>
           </div>
 
-<div
-  className="card clickable hover-card"
-  onClick={() => navigate("/new-project-development")}
-  title="New Project Development FMS Process"
->
-  <div className="card-icon">
-    <i className="bi bi-building-fill"></i>
-  </div>
-  <h3>NEW Project Development FMS</h3>
-  <span className="card-arrow">
-    <i className="bi bi-arrow-right arrow-icon"></i>
-  </span>
-</div>
+          {/* Active Card - NEW Project Development FMS */}
+          <div
+            className="card clickable hover-card"
+            onClick={() => navigate("/new-project-development")}
+            title="New Project Development FMS Process"
+          >
+            <div className="card-icon">
+              <i className="bi bi-building-fill"></i>
+            </div>
+            <h3>NEW Project Development FMS</h3>
+            <span className="card-arrow">
+              <i className="bi bi-arrow-right arrow-icon"></i>
+            </span>
+          </div>
 
+          {/* Disabled Cards */}
           <div className="card disabled">
             <div className="card-icon muted">
               <i className="bi bi-clock-history"></i>
