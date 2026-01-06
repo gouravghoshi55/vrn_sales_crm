@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query"; // NEW: TanStack Query
+import { useQuery } from "@tanstack/react-query";
 import { fetchMeetingsData } from "../services/fmsApi";
 import MeetingsModal from "./MeetingsModal";
 import { Button, Table, Form } from "react-bootstrap";
@@ -21,7 +21,6 @@ function Meetings() {
     isLoading,
     refetch, // To refresh after modal success
   } = useQuery({
-    // Cache key: changes when any filter changes → auto refetch
     queryKey: ["meetings", fromDate, toDate, status],
     queryFn: () =>
       fetchMeetingsData({
@@ -29,9 +28,7 @@ function Meetings() {
         toDate: toDate || undefined,
         status: status || undefined,
       }),
-    // Extract data from response
     select: (res) => res?.data || [],
-    // Cache settings: keep fresh for 5 min, keep in memory for 30 min
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 30,
   });
@@ -45,15 +42,12 @@ function Meetings() {
       alert("From Date cannot be after To Date");
       return;
     }
-
-    // No need to call loadData — changing state updates queryKey → auto refetch
   };
 
   const handleClearFilter = () => {
     setFromDate("");
     setToDate("");
     setStatus("");
-    // State change triggers refetch automatically
   };
 
   // Format date for display (safe handling)
@@ -106,18 +100,6 @@ function Meetings() {
                 />
               </div>
 
-              {/* <div className="col-md-3">
-                <Form.Label className="fw-medium">Status</Form.Label>
-                <Form.Select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="">All Statuses</option>
-                  <option value="Done">Done</option>
-                  <option value="Not done">Not done</option>
-                </Form.Select>
-              </div> */}
-
               <div className="col-md-5 d-flex gap-2">
                 <Button
                   variant="primary"
@@ -153,43 +135,51 @@ function Meetings() {
                 </p>
               </div>
             ) : (
-              <Table hover responsive bordered className="mb-0 align-middle">
-                <thead className="table-light">
-                  <tr>
-                    <th>Planned Date</th>
-                    <th>Firm Name</th>
-                    <th>Contact</th>
-                    <th>Locality</th>
-                    <th className="text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((r, i) => (
-                    <tr key={i}>
-                      <td>{formatDate(r.plannedDate)}</td>
-                      <td className="fw-medium">{r.colB}</td>
-                      <td>{r.colC || "-"}</td>
-                      <td>{r.colD}</td>
-                      <td className="text-center">
-                        <Button
-                          size="sm"
-                          variant="outline-primary"
-                          className="d-flex align-items-center gap-1 mx-auto"
-                          onClick={() =>
-                            setSelectedRow({
-                              ...r,
-                              rowIndex: r.rowIndex,
-                            })
-                          }
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                          Action
-                        </Button>
-                      </td>
+              <>
+                <Table hover responsive bordered className="mb-0 align-middle">
+                  <thead className="table-light">
+                    <tr>
+                      <th>Planned Date</th>
+                      <th>Firm Name</th>
+                      <th>Contact</th>
+                      <th>Locality</th>
+                      <th className="text-center">Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {rows.map((r, i) => (
+                      <tr key={i}>
+                        <td>{formatDate(r.plannedDate)}</td>
+                        <td className="fw-medium">{r.colB}</td>
+                        <td>{r.colC || "-"}</td>
+                        <td>{r.colD}</td>
+                        <td className="text-center">
+                          <Button
+                            size="sm"
+                            variant="outline-primary"
+                            className="d-flex align-items-center gap-1 mx-auto"
+                            onClick={() =>
+                              setSelectedRow({
+                                ...r,
+                                rowIndex: r.rowIndex,
+                              })
+                            }
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                            Action
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+
+                {/* Row count display */}
+                <div className="mt-3 text-muted small text-end pe-2">
+                  Showing <strong>{rows.length}</strong> record
+                  {rows.length !== 1 ? "s" : ""}
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -199,7 +189,7 @@ function Meetings() {
           <MeetingsModal
             row={selectedRow}
             onClose={() => setSelectedRow(null)}
-            onSuccess={() => refetch()} // Refresh query after success
+            onSuccess={() => refetch()}
           />
         )}
       </div>

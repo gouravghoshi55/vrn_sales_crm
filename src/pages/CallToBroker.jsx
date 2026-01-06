@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query"; // NEW: TanStack Query
+import { useQuery } from "@tanstack/react-query";
 import { fetchCallToBrokerData } from "../services/fmsApi";
 import ActionModal from "./ActionModal";
 import { Button, Table, Form } from "react-bootstrap";
@@ -20,9 +20,8 @@ function CallToBroker() {
   const {
     data: rows = [], // Default empty array if no data
     isLoading,
-    refetch, // To refresh after modal success
+    refetch,
   } = useQuery({
-    // Cache key: changes when any filter changes → auto refetch
     queryKey: ["callToBroker", fromDate, toDate, status, leadQualified],
     queryFn: () =>
       fetchCallToBrokerData({
@@ -31,11 +30,8 @@ function CallToBroker() {
         status: status || undefined,
         leadQualified: leadQualified || undefined,
       }),
-    // Extract data from response
     select: (res) => res?.data || [],
-    // Cache for 5 minutes (adjust as needed)
     staleTime: 1000 * 60 * 5,
-    // Keep cached data for 30 minutes
     gcTime: 1000 * 60 * 30,
   });
 
@@ -48,8 +44,7 @@ function CallToBroker() {
       alert("From Date cannot be after To Date");
       return;
     }
-
-    // No need to call loadData — changing state updates queryKey → auto refetch
+    // State change triggers refetch automatically
   };
 
   const handleClearFilter = () => {
@@ -109,34 +104,7 @@ function CallToBroker() {
                 />
               </div>
 
-              {/* <div className="col-md-3">
-                <Form.Label className="fw-medium">Status</Form.Label>
-                <Form.Select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="">All Statuses</option>
-                  <option value="Call Again">Call Again</option>
-                  <option value="Agreed to nextmeeting">
-                    Agreed to next meeting
-                  </option>
-                  <option value="Not interested">Not interested</option>
-                  <option value="CRR">CRR</option>
-                  <option value="Not Eligible">Not Eligible</option>s
-                </Form.Select>
-              </div>
-
-              <div className="col-md-3">
-                <Form.Label className="fw-medium">Is Lead Qualified</Form.Label>
-                <Form.Select
-                  value={leadQualified}
-                  onChange={(e) => setLeadQualified(e.target.value)}
-                >
-                  <option value="">All</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </Form.Select>
-              </div> */}
+              {/* Status and Lead Qualified selects are commented out — keeping as-is */}
 
               <div className="col-md-2 d-flex gap-2">
                 <Button
@@ -173,45 +141,53 @@ function CallToBroker() {
                 </p>
               </div>
             ) : (
-              <Table hover responsive bordered className="mb-0 align-middle">
-                <thead className="table-light">
-                  <tr>
-                    <th>Planned Date</th>
-                    <th>Firm Name</th>
-                    <th>Contact</th>
-                    <th>Locality</th>
-                    <th>Is Lead Qualified</th>
-                    <th className="text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((r, i) => (
-                    <tr key={i}>
-                      <td>{formatDate(r.plannedDate)}</td>
-                      <td className="fw-medium">{r.colB}</td>
-                      <td>{r.colC || "-"}</td>
-                      <td>{r.colD}</td>
-                      <td>{r.colK || "-"}</td>
-                      <td className="text-center">
-                        <Button
-                          size="sm"
-                          variant="outline-primary"
-                          className="d-flex align-items-center gap-1 mx-auto"
-                          onClick={() =>
-                            setSelectedRow({
-                              ...r,
-                              rowIndex: r.rowIndex,
-                            })
-                          }
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                          Action
-                        </Button>
-                      </td>
+              <>
+                <Table hover responsive bordered className="mb-0 align-middle">
+                  <thead className="table-light">
+                    <tr>
+                      <th>Planned Date</th>
+                      <th>Firm Name</th>
+                      <th>Contact</th>
+                      <th>Locality</th>
+                      <th>Is Lead Qualified</th>
+                      <th className="text-center">Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {rows.map((r, i) => (
+                      <tr key={i}>
+                        <td>{formatDate(r.plannedDate)}</td>
+                        <td className="fw-medium">{r.colB}</td>
+                        <td>{r.colC || "-"}</td>
+                        <td>{r.colD}</td>
+                        <td>{r.colK || "-"}</td>
+                        <td className="text-center">
+                          <Button
+                            size="sm"
+                            variant="outline-primary"
+                            className="d-flex align-items-center gap-1 mx-auto"
+                            onClick={() =>
+                              setSelectedRow({
+                                ...r,
+                                rowIndex: r.rowIndex,
+                              })
+                            }
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                            Action
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+
+                {/* ── NEW: Row count display ── */}
+                <div className="mt-3 text-muted small text-end pe-2">
+                  Showing <strong>{rows.length}</strong> record
+                  {rows.length !== 1 ? "s" : ""}
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -221,7 +197,7 @@ function CallToBroker() {
           <ActionModal
             row={selectedRow}
             onClose={() => setSelectedRow(null)}
-            onSuccess={() => refetch()} // Refresh data after modal success
+            onSuccess={() => refetch()}
           />
         )}
       </div>
