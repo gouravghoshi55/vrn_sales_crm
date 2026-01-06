@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 function ActionModal({ row, onClose, onSuccess }) {
   const [status, setStatus] = useState(row.colJ || ""); // Pre-fill if available
   const [leadQualified, setLeadQualified] = useState(row.colK || ""); // New field
-  const [contactPerson, setContactPerson] = useState(row.colL || "");
+  const [contactPerson, setContactPerson] = useState(row.colB || "");
   const [rera, setRera] = useState(row.colM || "");
   const [remark, setRemark] = useState(row.colN || "");
   const [days, setDays] = useState(row.colQ || "");
@@ -47,17 +47,17 @@ function ActionModal({ row, onClose, onSuccess }) {
   return (
     <Modal show onHide={onClose} centered size="lg" backdrop="static">
       <Modal.Header closeButton className="border-0 pb-1">
-  <div>
-    <Modal.Title className="fw-bold d-flex align-items-center gap-2">
-      <i className="bi bi-pencil-square text-primary fs-4"></i>
-      Update Call to Broker
-    </Modal.Title>
-    <div className="text-muted small mt-1">
-      Firm: <strong>{row.colB || "—"}</strong>  
-      {row.colC && ` • Contact: ${row.colC}`}
-    </div>
-  </div>
-</Modal.Header>
+        <div>
+          <Modal.Title className="fw-bold d-flex align-items-center gap-2">
+            <i className="bi bi-pencil-square text-primary fs-4"></i>
+            Update Call to Broker
+          </Modal.Title>
+          <div className="text-muted small mt-1">
+            Firm: <strong>{row.colB || "—"}</strong>
+            {row.colC && ` • Contact: ${row.colC}`}
+          </div>
+        </div>
+      </Modal.Header>
 
       <Modal.Body className="pt-4">
         <Form>
@@ -83,7 +83,7 @@ function ActionModal({ row, onClose, onSuccess }) {
             </Form.Select>
           </Form.Group>
 
-        <Form.Group className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label className="fw-medium">
               <i className="bi bi-check-circle-fill me-2 text-primary"></i>
               Is Lead Qualified <span className="text-danger">*</span>
@@ -98,7 +98,6 @@ function ActionModal({ row, onClose, onSuccess }) {
               <option value="No">No</option>
             </Form.Select>
           </Form.Group>
-
 
           {/* Contact Person Name */}
           <Form.Group className="mb-3">

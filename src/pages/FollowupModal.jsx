@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 function FollowupModal({ row, onClose, onSuccess }) {
   const [status, setStatus] = useState(row.colI || "");
-  const [contactPerson, setContactPerson] = useState(row.colJ || "");
+  const [contactPerson, setContactPerson] = useState(row.colB || "");
   const [rera, setRera] = useState(row.colK || "");
   const [remark, setRemark] = useState(row.colL || "");
   const [days, setDays] = useState(row.colM || "");
