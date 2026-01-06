@@ -77,16 +77,18 @@ function ActionModal({ row, onClose, onSuccess }) {
             </Form.Select>
           </Form.Group>
 
-          {/* Is Lead Qualified (NEW) */}
           <Form.Group className="mb-3">
             <Form.Label className="fw-medium">
               <i className="bi bi-check-circle-fill me-2 text-primary"></i>
-              Is Lead Qualified <span className="text-danger">*</span>
+              Is Lead Qualified
+              {/* Remove <span className="text-danger">*</span> if you also want to visually remove the "required" look */}
             </Form.Label>
             <Form.Select
               value={leadQualified}
               onChange={(e) => setLeadQualified(e.target.value)}
               className="form-select-lg"
+              // Remove required if you added it
+              // required    ← just delete or comment this line
             >
               <option value="">Select...</option>
               <option value="Yes">Yes</option>
