@@ -43,7 +43,6 @@ export const fetchFollowupData = async ({ fromDate, toDate, status } = {}) => {
 };
 
 // Update for Step 1: Call to Broker
-// Update for Step 1: Call to Broker
 export const submitCallToBrokerAction = async (payload) => {
   const params = new URLSearchParams({
     action: "updateStep1",

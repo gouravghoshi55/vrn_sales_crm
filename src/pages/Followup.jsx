@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFollowupData } from "../services/fmsApi";
-import FollowupModal from "./FollowupModal";
+import FollowupModal from "../modals/FollowupModal";
 import { Button, Table, Form } from "react-bootstrap";
 import Layout from "../components/Layout";
 import SkeletonTable from "../components/SkeletonTable";

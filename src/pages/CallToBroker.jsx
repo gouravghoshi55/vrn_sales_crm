@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCallToBrokerData } from "../services/fmsApi";
-import ActionModal from "./ActionModal";
+import ActionModal from "../modals/ActionModal";
 import { Button, Table, Form } from "react-bootstrap";
 import Layout from "../components/Layout";
 import SkeletonTable from "../components/SkeletonTable";

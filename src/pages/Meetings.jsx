@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMeetingsData } from "../services/fmsApi";
-import MeetingsModal from "./MeetingsModal";
+import MeetingsModal from "../modals/MeetingsModal";
 import { Button, Table, Form } from "react-bootstrap";
 import Layout from "../components/Layout";
 import SkeletonTable from "../components/SkeletonTable";
